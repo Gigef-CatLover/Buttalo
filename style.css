@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    background: #d4d4d4;
+    cursor: none;
+    overflow: hidden;
+    height: 100vh;
+}
+
+* {
+    cursor: none !important;
+}
+
+#custom-cursor {
+    position: fixed;
+    width: 96px;
+    height: 96px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+#falling-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; 
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.falling-image {
+    position: absolute;
+    top: -100px;
+    width: 50px;
+    animation: fall 5s linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.menu {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+}
+
+.title {
+    width: min(55vw, 850px);
+    margin-top: 4vh;
+    image-rendering: pixelated;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+.buttons {
+    margin-top: -9vh; 
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+}
+
+.bt {
+    width: min(18vw, 240px); 
+    cursor: pointer;
+    image-rendering: pixelated;
+    transition: transform 0.15s ease;
+}
+.bt:hover {
+    transform: scale(1.08);
+}
+
+
+.marconi {
+    position: fixed; 
+    left: 2vw;
+    bottom: 2vh;
+    width: min(18vw, 170px);
+    image-rendering: pixelated;
+    z-index: 1;
+}
+
+.github {
+    position: fixed; 
+    right: 2vw;
+    bottom: 2vh;
+    width: min(18vw, 170px);
+    image-rendering: pixelated;
+    z-index: 1;
+}
