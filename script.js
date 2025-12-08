@@ -19,7 +19,7 @@ function createFallingImage() {
 
 setInterval(createFallingImage, 300);
 
-// cursore personalizzato con flip
+
 const cursor = document.getElementById('custom-cursor');
 document.addEventListener('mousemove', e => {
     const x = e.clientX;
@@ -34,3 +34,37 @@ document.addEventListener('mousemove', e => {
     cursor.style.left = x + "px";
     cursor.style.top = e.clientY + "px";
 });
+
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+
+if (isTouchDevice) {
+    const cursor = document.getElementById('custom-cursor');
+    if (cursor) {
+        cursor.style.display = "none";
+    }
+    
+    // Abilita il clic sui bottoni per touch
+    const buttons = document.querySelectorAll('.bt');
+    buttons.forEach(button => {
+        button.style.cursor = 'pointer';
+        button.setAttribute('role', 'button');
+        button.setAttribute('tabindex', '0');
+        
+        // Aggiungi feedback al tocco
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+}
+
+// Riduci la frequenza delle immagini che cadono su mobile per performance
+if (isTouchDevice) {
+    setInterval(createFallingImage, 500); // 500ms invece di 300ms
+} else {
+    setInterval(createFallingImage, 300);
+}

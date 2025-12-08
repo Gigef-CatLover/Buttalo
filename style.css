@@ -19,6 +19,12 @@ body {
     z-index: 1000;
 }
 
+@media (hover: none) and (pointer: coarse) {
+    #custom-cursor {
+        display: none;
+    }
+}
+
 #falling-container {
     position: fixed;
     top: 0;
@@ -42,21 +48,190 @@ body {
     100% { transform: translateY(100vh); opacity: 0; }
 }
 
-.menu {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5vh;
+@media (min-width: 769px) {
+    .menu {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5vh;
+    }
+    
+    .title {
+        width: min(55vw, 850px);
+        margin-top: 2vh;
+        image-rendering: pixelated;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .buttons {
+        margin-top: -10vh;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vh;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .bt {
+        width: min(18vw, 240px); 
+        cursor: pointer;
+        image-rendering: pixelated;
+        transition: transform 0.15s ease;
+    }
+    
+    .bt:hover {
+        transform: scale(1.08);
+    }
 }
 
-.title {
-    width: min(55vw, 850px);
-    margin-top: 4vh;
-    image-rendering: pixelated;
-    animation: float 3s ease-in-out infinite;
+@media (max-width: 768px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .menu {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+        height: 100vh;
+    }
+    
+    .title {
+        width: 90%;
+        max-width: 400px;
+        margin-top: -10vh;
+        margin-bottom: 4vh;
+        image-rendering: pixelated;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vh;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .bt {
+        width: 70%;
+        max-width: 220px;
+        min-width: 180px;
+        cursor: pointer;
+        image-rendering: pixelated;
+        transition: transform 0.1s ease;
+    }
+    
+    .bt:active {
+        transform: scale(0.95);
+    }
+    
+    .marconi, .github {
+        width: 100px;
+        position: fixed;
+        bottom: 20px;
+    }
+    
+    .marconi {
+        left: 20px;
+    }
+    
+    .github {
+        right: 20px;
+    }
+    
+    .falling-image {
+        width: 40px;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+        .title {
+            animation: none;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        width: 95%;
+        max-width: 350px;
+        margin-top: -5vh;
+        margin-bottom: 3vh;
+    }
+    
+    .buttons {
+        gap: 2vh;
+    }
+    
+    .bt {
+        width: 65%;
+        min-width: 160px;
+        max-width: 200px;
+    }
+    
+    .marconi, .github {
+        width: 80px;
+        bottom: 15px;
+    }
+    
+    .marconi {
+        left: 15px;
+    }
+    
+    .github {
+        right: 15px;
+    }
+    
+    .falling-image {
+        width: 30px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 768px) {
+    .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding-top: 10vh;
+    }
+    
+    .title {
+        width: 40%;
+        max-width: 300px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    .buttons {
+        width: 40%;
+        margin-top: 0;
+        gap: 1.5vh;
+    }
+    
+    .bt {
+        width: 100%;
+        max-width: 180px;
+        min-width: auto;
+    }
+    
+    .marconi, .github {
+        position: absolute;
+        width: 70px;
+        bottom: 10px;
+    }
 }
 
 @keyframes float {
@@ -64,23 +239,6 @@ body {
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
-.buttons {
-    margin-top: -9vh; 
-    display: flex;
-    flex-direction: column;
-    gap: 2.5vh;
-}
-
-.bt {
-    width: min(18vw, 240px); 
-    cursor: pointer;
-    image-rendering: pixelated;
-    transition: transform 0.15s ease;
-}
-.bt:hover {
-    transform: scale(1.08);
-}
-
 
 .marconi {
     position: fixed; 
