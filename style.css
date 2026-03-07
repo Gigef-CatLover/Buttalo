@@ -6,6 +6,21 @@ body {
     height: 100vh;
 }
 
+body.fade-out {
+    animation: fade-out-to-game 0.5s ease forwards;
+}
+
+@keyframes fade-out-to-game {
+    0% {
+        opacity: 1;
+        filter: blur(0px);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(2px);
+    }
+}
+
 * {
     cursor: none !important;
 }
@@ -16,7 +31,7 @@ body {
     height: 96px;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 100000;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -53,37 +68,46 @@ body {
         position: relative;
         z-index: 1;
         width: 100%;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 5vh;
+        justify-content: center;
+        margin-top: -5vh;
     }
     
     .title {
         width: min(55vw, 850px);
-        margin-top: 2vh;
+        margin-top: 0;
+        margin-bottom: 2vh;
         image-rendering: pixelated;
         animation: float 3s ease-in-out infinite;
     }
     
     .buttons {
-        margin-top: -10vh;
+        margin-top: 0;
         display: flex;
         flex-direction: column;
-        gap: 2.5vh;
         align-items: center;
+        justify-content: center;
+        gap: 3vh;
         width: 100%;
     }
     
     .bt {
-        width: min(18vw, 240px); 
+        width: min(22vw, 280px);
+        max-width: 280px;
         cursor: pointer;
         image-rendering: pixelated;
-        transition: transform 0.15s ease;
+        transition: transform 0.2s ease;
     }
     
     .bt:hover {
         transform: scale(1.08);
+    }
+    
+    .bt:active {
+        transform: scale(0.95);
     }
 }
 
@@ -117,21 +141,26 @@ body {
     }
     
     .buttons {
-        margin-top: 0;
+        margin-top: -3vh;
         display: flex;
         flex-direction: column;
         gap: 2.5vh;
         align-items: center;
+        justify-content: center;
         width: 100%;
     }
     
     .bt {
-        width: 70%;
-        max-width: 220px;
+        width: 68%;
+        max-width: 240px;
         min-width: 180px;
         cursor: pointer;
         image-rendering: pixelated;
-        transition: transform 0.1s ease;
+        transition: transform 0.2s ease;
+    }
+    
+    .bt:hover {
+        transform: scale(1.08);
     }
     
     .bt:active {
@@ -176,9 +205,13 @@ body {
     }
     
     .bt {
-        width: 65%;
-        min-width: 160px;
-        max-width: 200px;
+        width: 68%;
+        min-width: 170px;
+        max-width: 220px;
+    }
+    
+    .bt:hover {
+        transform: scale(1.08);
     }
     
     .marconi, .github {
@@ -216,15 +249,19 @@ body {
     }
     
     .buttons {
-        width: 40%;
+        width: 100%;
         margin-top: 0;
-        gap: 1.5vh;
+        gap: 2vh;
     }
     
     .bt {
         width: 100%;
-        max-width: 180px;
+        max-width: 200px;
         min-width: auto;
+    }
+    
+    .bt:hover {
+        transform: scale(1.08);
     }
     
     .marconi, .github {
@@ -256,4 +293,124 @@ body {
     width: min(18vw, 170px);
     image-rendering: pixelated;
     z-index: 1;
+}
+
+/* Popup Opzioni – carousel contenitori */
+.options-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.options-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.options-modal {
+    position: relative;
+    width: 100%;
+    max-width: min(900px, 85vw);
+    max-height: 90vh;
+}
+
+.options-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #444;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.options-close:hover {
+    background: #666;
+    transform: scale(1.05);
+}
+
+.options-close:active {
+    transform: scale(0.95);
+}
+
+.options-carousel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.options-arrow {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: #333;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.options-arrow:hover {
+    background: #555;
+    transform: scale(1.1);
+}
+
+.options-arrow:active {
+    transform: scale(0.95);
+}
+
+.options-slides {
+    position: relative;
+    flex: 1;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.options-slide {
+    position: absolute;
+    max-width: 100%;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.options-slide.active {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .options-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
 }

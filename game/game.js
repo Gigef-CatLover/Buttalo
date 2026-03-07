@@ -13,13 +13,38 @@ const container = document.getElementById("falling-container");
 const catsContainer = document.getElementById("cats-container");
 
 const healthFill = document.getElementById("player-hp-fill");
-
+const timerElement = document.getElementById("survival-timer");
 
 let health = 100;
 let activeImages = 0;
 let activeCats = 0;
 const maxImages = 15;
 const maxCats = 1;
+
+let survivalTime = 0;
+let timerInterval = null;
+
+function startSurvivalTimer() {
+    if (!timerElement) return;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    survivalTime = 0;
+    timerElement.textContent = '0 s';
+
+    timerInterval = setInterval(() => {
+        survivalTime += 0.1;
+        const seconds = Math.floor(survivalTime);
+        timerElement.textContent = `${seconds} s`;
+    }, 100);
+}
+
+// VARIABILI PER LA VELOCITÀ (senza indicatori visivi)
+let baseSpeed = 15; // Velocità base di caduta
+let speedMultiplier = 1; // Moltiplicatore di velocità (1 = velocità normale)
+const maxSpeedMultiplier = 3; // Limite massimo di velocità
 
 const bins = document.querySelectorAll('.bin');
 let draggedBin = null;
@@ -43,13 +68,25 @@ const rightGrabbing = "../assets/ui/righthandgrabbing.png";
 function updateHealth(damage) {
     health = Math.max(0, health - damage);
     healthFill.style.width = health + '%';
-    healthValue.textContent = Math.round(health) + '%';
+    
+    if (health <= 20) {
+        healthFill.style.background = '#F7765C';
+        healthFill.classList.add('low-health');
+    } else {
+        healthFill.style.background = '#ABEDB4';
+        healthFill.classList.remove('low-health');
+    }
     
     if (health <= 0) {
         setTimeout(() => {
-            alert('GAME OVER! Hai perso tutta la vita!');
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            const seconds = Math.floor(survivalTime);
+            alert(`GAME OVER! Hai perso tutta la vita!\nSei sopravvissuto per ${seconds} secondi.`);
             health = 100;
-            updateHealth(0);
+            healthFill.style.width = "100%";
+            startSurvivalTimer();
         }, 100);
     }
 }
@@ -103,18 +140,6 @@ function getRandomPosition(zone, trashType) {
     activeTrash[trashType].push({ position: position });
     
     return position;
-}
-function updateHealth(damage) {
-    health = Math.max(0, health - damage);
-    healthFill.style.width = health + "%";
-
-    if (health <= 0) {
-        setTimeout(() => {
-            alert("GAME OVER!");
-            health = 100;
-            healthFill.style.width = "100%";
-        }, 100);
-    }
 }
 
 function checkCollision(img) {
@@ -191,7 +216,9 @@ function createFallingImage() {
     const position = getRandomPosition(item.zone, item.type);
     img.style.left = position + "px";
     
-    const speed = 15 + Math.random() * 10;
+    // MODIFICATO: la velocità ora dipende da speedMultiplier
+    // Più alto è speedMultiplier, più veloce cade (tempo minore)
+    const speed = (baseSpeed + Math.random() * 10) / speedMultiplier;
     img.style.animation = `fall ${speed}s linear forwards`;
     
     container.appendChild(img);
@@ -299,6 +326,18 @@ function createCat() {
             activeCats--;
         }
     }, catDuration);
+}
+
+// FUNZIONE CHE AUMENTA LA VELOCITÀ (SILENZIOSA, SENZA POPUP)
+function increaseSpeed() {
+    speedMultiplier += 0.2; // Aumenta del 20% ogni 10 secondi
+    
+    // Limita la velocità massima
+    if (speedMultiplier > maxSpeedMultiplier) {
+        speedMultiplier = maxSpeedMultiplier;
+    }
+    
+    // NON mostrare alcun messaggio - aumento silenzioso
 }
 
 function updateCursor(direction, x, y) {
@@ -472,8 +511,16 @@ function initBinsPositions() {
 
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+// Avvio del timer di sopravvivenza all'inizio della partita
+startSurvivalTimer();
+
+// Intervallo per creare nuova spazzatura
 setInterval(createFallingImage, 1500);
 
+// INTERVALLO CHE AUMENTA LA VELOCITÀ OGNI 10 SECONDI (SILENZIOSO)
+setInterval(increaseSpeed, 10000);
+
+// Crea il gattino dopo 2 secondi
 setTimeout(() => {
     createCat();
 }, 2000);
@@ -508,3 +555,19 @@ bins.forEach(bin => {
 
 window.addEventListener('resize', initBinsPositions);
 initBinsPositions();
+
+// Esci al menu principale (con transizione come Start)
+const exitBtn = document.getElementById('exit-to-menu');
+if (exitBtn) {
+    const goToMenu = (e) => {
+        if (e) e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+            window.location.href = '../index.html';
+        }, 500);
+    };
+    exitBtn.addEventListener('click', goToMenu);
+    exitBtn.addEventListener('touchend', (e) => {
+        goToMenu(e);
+    });
+}

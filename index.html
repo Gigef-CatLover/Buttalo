@@ -12,10 +12,8 @@
     <div class="menu">
         <img src="assets/ui/title.png" class="title" alt="Titolo del Gioco">
         <div class="buttons">
-            <img src="assets/bt/startbt.png" class="bt" alt="Start">
-            <img src="assets/bt/optionsbt.png" class="bt" alt="Opzioni">
-            <img src="assets/bt/exitbt.png" class="bt" alt="Esci">
-        
+            <img src="assets/bt/startbt.png" class="bt bt-start" alt="Start">
+            <img src="assets/bt/optionsbt.png" class="bt bt-options" alt="Opzioni">
 <a href="https://www.marconiverona.edu.it/" target="_blank" rel="noopener noreferrer">
     <img src="assets/ui/marconilg.png" class="marconi" alt="Logo Marconi">
 </a>
@@ -23,6 +21,23 @@
 <a href="https://github.com/Gigef-CatLover/Buttalo" target="_blank" rel="noopener noreferrer">
     <img src="assets/ui/githublg.png" class="github" alt="Logo GitHub">
 </a>
+    <!-- Popup Opzioni: carousel contenitori -->
+    <div id="options-overlay" class="options-overlay" aria-hidden="true">
+        <div class="options-modal">
+            <button type="button" class="options-close" aria-label="Chiudi">&times;</button>
+            <div class="options-carousel">
+                <button type="button" class="options-arrow options-prev" aria-label="Precedente">&#10094;</button>
+                <div class="options-slides">
+                    <img src="assets/ui/option_paper.png" class="options-slide active" alt="Carta">
+                    <img src="assets/ui/option_plastic.png" class="options-slide" alt="Plastica">
+                    <img src="assets/ui/option_glass.png" class="options-slide" alt="Vetro">
+                    <img src="assets/ui/option_organic.png" class="options-slide" alt="Organico">
+                </div>
+                <button type="button" class="options-arrow options-next" aria-label="Successivo">&#10095;</button>
+            </div>
+        </div>
+    </div>
+
     <img src="assets/ui/handpointing.cur" id="custom-cursor" alt="">
     <script src="script.js"></script>
 </body>
