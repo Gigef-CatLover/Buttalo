@@ -46,6 +46,10 @@ let baseSpeed = 15; // Velocità base di caduta
 let speedMultiplier = 1; // Moltiplicatore di velocità (1 = velocità normale)
 const maxSpeedMultiplier = 3; // Limite massimo di velocità
 
+// VARIABILI PER LA FREQUENZA DELLA SPAZZATURA
+let trashFrequency = 1500; // millisecondi tra creazioni di spazzatura
+let trashInterval = null;
+
 const bins = document.querySelectorAll('.bin');
 let draggedBin = null;
 let startX = 0;
@@ -329,14 +333,23 @@ function createCat() {
 }
 
 // FUNZIONE CHE AUMENTA LA VELOCITÀ (SILENZIOSA, SENZA POPUP)
-function increaseSpeed() {
-    speedMultiplier += 0.2; // Aumenta del 20% ogni 10 secondi
-    
-    // Limita la velocità massima
+function increaseDifficulty() {
+    // Aumenta velocità
+    speedMultiplier += 0.2;
     if (speedMultiplier > maxSpeedMultiplier) {
         speedMultiplier = maxSpeedMultiplier;
     }
-    
+
+    // Aumenta quantità di spazzatura riducendo l'intervallo
+    if (trashInterval) {
+        clearInterval(trashInterval);
+    }
+    trashFrequency -= 200; // riduci di 200ms ogni 30 secondi
+    if (trashFrequency < 500) {
+        trashFrequency = 500; // minimo 500ms
+    }
+    trashInterval = setInterval(createFallingImage, trashFrequency);
+
     // NON mostrare alcun messaggio - aumento silenzioso
 }
 
@@ -526,10 +539,10 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 startSurvivalTimer();
 
 // Intervallo per creare nuova spazzatura
-setInterval(createFallingImage, 1500);
+trashInterval = setInterval(createFallingImage, trashFrequency);
 
-// INTERVALLO CHE AUMENTA LA VELOCITÀ OGNI 10 SECONDI (SILENZIOSO)
-setInterval(increaseSpeed, 10000);
+// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 30 SECONDI (SILENZIOSO)
+setInterval(increaseDifficulty, 30000);
 
 // Crea il gattino dopo 2 secondi
 setTimeout(() => {
@@ -564,7 +577,25 @@ bins.forEach(bin => {
     bin.addEventListener('touchstart', startDrag);
 });
 
+function shuffleBins() {
+    const binsContainer = document.querySelector('.bins-container');
+    const binsArray = Array.from(bins);
+    
+    // Shuffle array
+    for (let i = binsArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [binsArray[i], binsArray[j]] = [binsArray[j], binsArray[i]];
+    }
+    
+    // Remove all bins
+    bins.forEach(bin => bin.remove());
+    
+    // Re-append in shuffled order
+    binsArray.forEach(bin => binsContainer.appendChild(bin));
+}
+
 window.addEventListener('resize', initBinsPositions);
+shuffleBins();
 initBinsPositions();
 
 // Esci al menu principale (con transizione come Start)
