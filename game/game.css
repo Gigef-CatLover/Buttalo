@@ -207,6 +207,11 @@ body.fade-out {
 }
 
 @media (max-width: 768px) {
+    #custom-cursor {
+        width: 72px;
+        height: 72px;
+    }
+    
     .falling-image {
         width: 40px;
     }
@@ -247,6 +252,26 @@ body.fade-out {
     .health-value {
         font-size: 18px;
         min-width: 60px;
+    }
+    
+    #player-hp-bar {
+        top: 6px;
+        width: 88%;
+        height: 18px;
+        border-width: 2px;
+    }
+    
+    #survival-timer {
+        top: 6px;
+        right: 6px;
+        font-size: 14px;
+        padding: 3px 8px;
+    }
+    
+    .exit-btn {
+        top: 6px;
+        left: 6px;
+        width: min(26vw, 120px);
     }
     
     #falling-container {
@@ -341,6 +366,11 @@ body.fade-out {
 }
 
 @media (max-width: 480px) {
+    #custom-cursor {
+        width: 60px;
+        height: 60px;
+    }
+    
     .falling-image {
         width: 30px;
     }
@@ -376,6 +406,26 @@ body.fade-out {
     .health-value {
         font-size: 16px;
         min-width: 50px;
+    }
+    
+    #player-hp-bar {
+        top: 4px;
+        width: 92%;
+        height: 16px;
+        border-width: 2px;
+    }
+    
+    #survival-timer {
+        top: 4px;
+        right: 4px;
+        font-size: 12px;
+        padding: 2px 6px;
+    }
+    
+    .exit-btn {
+        top: 4px;
+        left: 4px;
+        width: min(32vw, 110px);
     }
     
     #falling-container {
