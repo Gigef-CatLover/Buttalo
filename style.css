@@ -103,7 +103,7 @@ body.fade-out {
     }
     
     .bt:hover {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
     
     .bt:active {
@@ -160,7 +160,7 @@ body.fade-out {
     }
     
     .bt:hover {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
     
     .bt:active {
@@ -211,7 +211,7 @@ body.fade-out {
     }
     
     .bt:hover {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
     
     .marconi, .github {
@@ -261,7 +261,7 @@ body.fade-out {
     }
     
     .bt:hover {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
     
     .marconi, .github {
