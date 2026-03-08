@@ -541,8 +541,8 @@ startSurvivalTimer();
 // Intervallo per creare nuova spazzatura
 trashInterval = setInterval(createFallingImage, trashFrequency);
 
-// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 10 SECONDI (SILENZIOSO)
-setInterval(increaseDifficulty, 10000);
+// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 30 SECONDI (SILENZIOSO)
+setInterval(increaseDifficulty, 30000);
 
 // Crea il gattino dopo 2 secondi
 setTimeout(() => {
@@ -577,25 +577,7 @@ bins.forEach(bin => {
     bin.addEventListener('touchstart', startDrag);
 });
 
-function shuffleBins() {
-    const binsContainer = document.querySelector('.bins-container');
-    const binsArray = Array.from(bins);
-    
-    // Shuffle array
-    for (let i = binsArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [binsArray[i], binsArray[j]] = [binsArray[j], binsArray[i]];
-    }
-    
-    // Remove all bins
-    bins.forEach(bin => bin.remove());
-    
-    // Re-append in shuffled order
-    binsArray.forEach(bin => binsContainer.appendChild(bin));
-}
-
 window.addEventListener('resize', initBinsPositions);
-shuffleBins();
 initBinsPositions();
 
 // Esci al menu principale (con transizione come Start)
