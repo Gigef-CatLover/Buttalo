@@ -269,9 +269,8 @@ body.fade-out {
     }
     
     .exit-btn {
-        top: 6px;
-        left: 6px;
-        width: min(26vw, 120px);
+        top: 32px;
+        width: min(36vw, 150px);
     }
     
     #falling-container {
@@ -326,24 +325,24 @@ body.fade-out {
 
 .exit-btn {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 42px;
+    left: 50%;
     z-index: 9999;
     padding: 0;
     border: none;
     background: transparent;
     cursor: pointer;
-    width: min(18vw, 140px);
+    width: min(26vw, 160px);
     transition: transform 0.2s ease;
     image-rendering: pixelated;
 }
 
 .exit-btn:hover {
-    transform: scale(1.08);
+    transform: translateX(-50%) scale(1.08);
 }
 
 .exit-btn:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
 }
 
 .exit-btn img {
@@ -423,9 +422,8 @@ body.fade-out {
     }
     
     .exit-btn {
-        top: 4px;
-        left: 4px;
-        width: min(32vw, 110px);
+        top: 26px;
+        width: min(42vw, 130px);
     }
     
     #falling-container {
