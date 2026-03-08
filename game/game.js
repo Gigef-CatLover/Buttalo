@@ -46,6 +46,10 @@ let baseSpeed = 15; // Velocità base di caduta
 let speedMultiplier = 1; // Moltiplicatore di velocità (1 = velocità normale)
 const maxSpeedMultiplier = 3; // Limite massimo di velocità
 
+// VARIABILI PER LA FREQUENZA DELLA SPAZZATURA
+let trashFrequency = 1500; // millisecondi tra creazioni di spazzatura
+let trashInterval = null;
+
 const bins = document.querySelectorAll('.bin');
 let draggedBin = null;
 let startX = 0;
@@ -94,11 +98,12 @@ function updateHealth(damage) {
 function getRandomPosition(zone, trashType) {
     const screenWidth = window.innerWidth;
     const trashWidth = 50;
+    const edgeMargin = screenWidth * 0.08; // margine dai bordi: 8% da ogni lato
     
     let minX, maxX;
     
     if (zone === "left") {
-        minX = 0;
+        minX = edgeMargin;
         maxX = screenWidth * 0.2;
     } else if (zone === "center-left") {
         minX = screenWidth * 0.2;
@@ -111,7 +116,7 @@ function getRandomPosition(zone, trashType) {
         maxX = screenWidth * 0.8;
     } else if (zone === "right") {
         minX = screenWidth * 0.8;
-        maxX = screenWidth;
+        maxX = screenWidth - edgeMargin;
     }
     
     let attempts = 0;
@@ -328,15 +333,24 @@ function createCat() {
     }, catDuration);
 }
 
-// FUNZIONE CHE AUMENTA LA VELOCITÀ (SILENZIOSA, SENZA POPUP)
-function increaseSpeed() {
-    speedMultiplier += 0.2; // Aumenta del 20% ogni 10 secondi
-    
-    // Limita la velocità massima
+// FUNZIONE CHE AUMENTA DIFFICOLTÀ: VELOCITÀ E QUANTITÀ DI SPAZZATURA (SILENZIOSA)
+function increaseDifficulty() {
+    // Aumenta velocità
+    speedMultiplier += 0.15;
     if (speedMultiplier > maxSpeedMultiplier) {
         speedMultiplier = maxSpeedMultiplier;
     }
-    
+
+    // Aumenta quantità di spazzatura riducendo l'intervallo
+    if (trashInterval) {
+        clearInterval(trashInterval);
+    }
+    trashFrequency -= 150; // riduci di 150ms ogni 30 secondi
+    if (trashFrequency < 600) {
+        trashFrequency = 600; // minimo 600ms
+    }
+    trashInterval = setInterval(createFallingImage, trashFrequency);
+
     // NON mostrare alcun messaggio - aumento silenzioso
 }
 
@@ -500,11 +514,25 @@ function stopDrag(e) {
 
 function initBinsPositions() {
     const screenWidth = window.innerWidth;
-    const binWidth = 180;
-    const spacing = (screenWidth - (binWidth * 4)) / 5;
+    if (bins.length === 0) return;
+
+    // Usa la larghezza effettiva dal CSS (con clamp)
+    const binWidth = bins[0].offsetWidth || 180;
+    const edgeMargin = 10; // margine dai bordi in pixel
+    const availableWidth = screenWidth - (edgeMargin * 2);
+    const totalBinsWidth = binWidth * bins.length;
+
+    let spacing = (availableWidth - totalBinsWidth) / (bins.length + 1);
+    if (spacing < 5) spacing = 5; // minimo spacing di 5px
     
     bins.forEach((bin, index) => {
-        const left = spacing + (spacing + binWidth) * index;
+        let left = edgeMargin + spacing + (binWidth + spacing) * index;
+        
+        // Assicura che nessun bidone esca dal lato destro
+        if (left + binWidth > screenWidth - edgeMargin) {
+            left = screenWidth - binWidth - edgeMargin;
+        }
+        
         bin.style.left = left + 'px';
     });
 }
@@ -515,10 +543,10 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 startSurvivalTimer();
 
 // Intervallo per creare nuova spazzatura
-setInterval(createFallingImage, 1500);
+trashInterval = setInterval(createFallingImage, trashFrequency);
 
-// INTERVALLO CHE AUMENTA LA VELOCITÀ OGNI 10 SECONDI (SILENZIOSO)
-setInterval(increaseSpeed, 10000);
+// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 30 SECONDI (SILENZIOSO)
+setInterval(increaseDifficulty, 30000);
 
 // Crea il gattino dopo 2 secondi
 setTimeout(() => {
