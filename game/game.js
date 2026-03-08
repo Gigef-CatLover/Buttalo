@@ -541,8 +541,8 @@ startSurvivalTimer();
 // Intervallo per creare nuova spazzatura
 trashInterval = setInterval(createFallingImage, trashFrequency);
 
-// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 30 SECONDI (SILENZIOSO)
-setInterval(increaseDifficulty, 30000);
+// INTERVALLO CHE AUMENTA LA DIFFICOLTÀ OGNI 10 SECONDI (SILENZIOSO)
+setInterval(increaseDifficulty, 10000);
 
 // Crea il gattino dopo 2 secondi
 setTimeout(() => {
