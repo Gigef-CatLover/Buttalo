@@ -129,10 +129,8 @@ body.fade-out {
 
 .bin {
     position: absolute;
-    /* responsive bin size: min 60px up to 180px, adjusting with viewport width */
-    width: clamp(60px, 18vw, 180px);
-    height: auto;
-    aspect-ratio: 9 / 10;
+    width: 180px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -227,10 +225,8 @@ body.fade-out {
     }
     
     .bin {
-        /* allow clamp to control size, but cap height and bottom spacing */
-        width: clamp(60px, 18vw, 130px);
-        height: auto;
-        aspect-ratio: 9 / 10;
+        width: 130px;
+        height: 160px;
         bottom: 5px;
     }
     
@@ -266,11 +262,10 @@ body.fade-out {
     }
     
     #survival-timer {
-        /* less bulky and lower on mobile */
-        top: 32px; /* below health bar */
+        top: 6px;
         right: 6px;
-        font-size: 12px;
-        padding: 2px 6px;
+        font-size: 14px;
+        padding: 3px 8px;
     }
     
     .exit-btn {
@@ -329,25 +324,25 @@ body.fade-out {
 }
 
 .exit-btn {
-    /* small, non‑bulky exit button in corner without animation */
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 42px;
+    left: 50%;
     z-index: 9999;
     padding: 0;
     border: none;
     background: transparent;
     cursor: pointer;
-    /* even smaller: min 30px, max 80px */
-    width: clamp(30px, 10vw, 80px);
-    /* no transform/transition */
+    width: min(26vw, 160px);
+    transition: transform 0.2s ease;
     image-rendering: pixelated;
 }
 
-/* remove hover/active scaling entirely */
-.exit-btn:hover,
+.exit-btn:hover {
+    transform: translateX(-50%) scale(1.08);
+}
+
 .exit-btn:active {
-    transform: none;
+    transform: translateX(-50%) scale(0.95);
 }
 
 .exit-btn img {
@@ -384,10 +379,8 @@ body.fade-out {
     }
     
     .bin {
-        /* allow clamp to decide size on very small screens */
-        width: clamp(60px, 18vw, 100px);
-        height: auto;
-        aspect-ratio: 9 / 10;
+        width: 100px;
+        height: 130px;
     }
     
     .bin-front {

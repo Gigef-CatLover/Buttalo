@@ -500,22 +500,11 @@ function stopDrag(e) {
 
 function initBinsPositions() {
     const screenWidth = window.innerWidth;
-    if (bins.length === 0) return;
-
-    // compute actual width from first bin (CSS may change it with clamp)
-    const binWidth = bins[0].offsetWidth || 180;
-    const totalBinsWidth = binWidth * bins.length;
-
-    // spacing between bins, at least 5px; if screen too narrow we'll let them touch
-    let spacing = (screenWidth - totalBinsWidth) / (bins.length + 1);
-    if (spacing < 5) spacing = 5;
-
+    const binWidth = 180;
+    const spacing = (screenWidth - (binWidth * 4)) / 5;
+    
     bins.forEach((bin, index) => {
-        let left = spacing + (binWidth + spacing) * index;
-        // ensure we never push a bin off the right edge
-        if (left + binWidth > screenWidth) {
-            left = screenWidth - binWidth - 5;
-        }
+        const left = spacing + (spacing + binWidth) * index;
         bin.style.left = left + 'px';
     });
 }
