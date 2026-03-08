@@ -60,8 +60,8 @@ body.fade-out {
 }
 
 .health-bar {
-        /* health bar width flexible */
-        width: clamp(200px, 40vw, 400px);
+    width: 400px;
+    height: 30px;
     background: #444;
     border-radius: 15px;
     overflow: hidden;
@@ -129,10 +129,10 @@ body.fade-out {
 
 .bin {
     position: absolute;
-    /* bins scale between 100px and 180px depending on viewport */
-    width: clamp(100px, 18vw, 180px);
-    height: auto;
-    aspect-ratio: 9 / 10;
+    width: 180px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
     align-items: center;
     cursor: grab;
     user-select: none;
@@ -308,8 +308,7 @@ body.fade-out {
     border: none;
     background: transparent;
     cursor: pointer;
-    /* responsive exit button */
-    width: clamp(100px, 18vw, 140px);
+    width: min(18vw, 140px);
     transition: transform 0.2s ease;
     image-rendering: pixelated;
 }

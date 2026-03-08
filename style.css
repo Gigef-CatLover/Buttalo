@@ -77,8 +77,7 @@ body.fade-out {
     }
     
     .title {
-        /* scale between 250px and 850px based on viewport */
-        width: clamp(250px, 55vw, 850px);
+        width: min(55vw, 850px);
         margin-top: 0;
         margin-bottom: 2vh;
         image-rendering: pixelated;
@@ -96,8 +95,7 @@ body.fade-out {
     }
     
     .bt {
-        /* button width scales from 170px up to 280px */
-        width: clamp(170px, 22vw, 280px);
+        width: min(22vw, 280px);
         max-width: 280px;
         cursor: pointer;
         image-rendering: pixelated;
@@ -134,8 +132,7 @@ body.fade-out {
     }
     
     .title {
-        /* mobile title sizing */
-        width: clamp(220px, 90vw, 400px);
+        width: 90%;
         max-width: 400px;
         margin-top: -10vh;
         margin-bottom: 4vh;
@@ -154,10 +151,9 @@ body.fade-out {
     }
     
     .bt {
-        /* mobile button scaling */
-        width: clamp(170px, 68vw, 240px);
+        width: 68%;
         max-width: 240px;
-        min-width: 170px;
+        min-width: 180px;
         cursor: pointer;
         image-rendering: pixelated;
         transition: transform 0.2s ease;
@@ -172,8 +168,7 @@ body.fade-out {
     }
     
     .marconi, .github {
-        /* logos scale with viewport, min 80px max 170px */
-        width: clamp(80px, 18vw, 170px);
+        width: 100px;
         position: fixed;
         bottom: 20px;
     }
